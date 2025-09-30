@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <h2 class="mb-3">Book an Appointment</h2>
+    <form method="post" class="card card-body shadow-sm">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">{{ form.mother_name.label }} {{ form.mother_name(class="form-control") }}</div>
+      <div class="mb-3">{{ form.phone.label }} {{ form.phone(class="form-control") }}</div>
+      <div class="mb-3">{{ form.clinic.label }} {{ form.clinic(class="form-control") }}</div>
+      <div class="mb-3">{{ form.date.label }} {{ form.date(class="form-control") }}</div>
+      <div class="mb-3">{{ form.notes.label }} {{ form.notes(class="form-control", rows="3") }}</div>
+      <button type="submit" class="btn btn-success">{{ form.submit.label.text }}</button>
+    </form>
+  </div>
+</div>
+
+{% if appts %}
+<div class="mt-5">
+  <h3>All Appointments (Nurse View)</h3>
+  <table class="table table-bordered table-sm mt-3">
+    <thead><tr><th>Name</th><th>Clinic</th><th>Date</th><th>Phone</th></tr></thead>
+    <tbody>
+      {% for a in appts %}
+        <tr>
+          <td>{{ a.mother_name }}</td>
+          <td>{{ a.clinic }}</td>
+          <td>{{ a.date }}</td>
+          <td>{{ a.phone }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

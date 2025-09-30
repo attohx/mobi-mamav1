@@ -1,0 +1,15 @@
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+h2, h3 {
+  color: #008080;
+}
+
+.btn-success {
+  background-color: #ff6f61;
+  border: none;
+}
+.btn-success:hover {
+  background-color: #e85c4f;
+}

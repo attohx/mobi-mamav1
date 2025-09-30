@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Tip</h2>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <p>{{ form.title.label }}<br>{{ form.title() }}</p>
+  <p>{{ form.language.label }}<br>{{ form.language() }}</p>
+  <p>{{ form.content.label }}<br>{{ form.content(rows=6) }}</p>
+  <p>{{ form.audio_filename.label }}<br>{{ form.audio_filename() }}</p>
+  <p>{{ form.submit() }}</p>
+</form>
+<p>Place audio files in <code>static/audio/</code> and reference their filename above.</p>
+{% endblock %}

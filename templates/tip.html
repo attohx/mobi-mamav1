@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ tip.title }}</h2>
+<div>{{ tip.content|nl2br }}</div>
+
+{% if tip.audio_filename %}
+  <h3>Audio</h3>
+  <audio controls preload="none">
+    <source src="{{ url_for('audio_file', filename=tip.audio_filename) }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+{% endif %}
+{% endblock %}

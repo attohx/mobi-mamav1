@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <h2 class="mb-4 text-center">Health Tips ({{ lang|upper }})</h2>
+    
+    <p class="text-center">
+      Switch language:
+      <a href="{{ url_for('index', lang='en') }}" class="btn btn-sm btn-outline-primary">English</a>
+      <a href="{{ url_for('index', lang='tw') }}" class="btn btn-sm btn-outline-success">Twi</a>
+    </p>
+
+    <div class="list-group shadow-sm">
+      {% for tip in tips %}
+        <a href="{{ url_for('tip_detail', tip_id=tip.id) }}" class="list-group-item list-group-item-action">
+          <strong>{{ tip.title }}</strong><br>
+          <small class="text-muted">{{ tip.created_at.strftime('%Y-%m-%d') }}</small>
+        </a>
+      {% else %}
+        <div class="alert alert-warning">No tips available for this language.</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

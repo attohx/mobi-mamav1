@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Nurse Dashboard</h2>
+<p><a href="{{ url_for('add_tip') }}">Add Tip</a></p>
+
+<h3>Tips</h3>
+<ul>
+  {% for tip in tips %}
+    <li>{{ tip.title }} ({{ tip.language }})</li>
+  {% endfor %}
+</ul>
+
+<h3>Appointments</h3>
+<ul>
+  {% for a in appts %}
+    <li>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }} — {{ a.mother_name }} — {{ a.clinic }} — {{ a.date }} — {{ a.phone }}</li>
+  {% else %}
+    <li>No appointments yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
