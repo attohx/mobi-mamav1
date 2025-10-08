@@ -23,9 +23,18 @@ It helps mothers learn health tips, book appointments, and access healthcare inf
 
 ---
 
-## ⚙️ Setup Instructions
+## 👩‍⚕️ Default Login
+- Role	Username	Password
+- Nurse	nurse	password
 
-1. **Clone the project**
-   ```bash
-   git clone https://github.com/yourusername/mobi_mama.git
-   cd mobi_mama
+
+## 🌍 Future Plans
+- Add messaging between mothers and nurses
+
+- Add SMS reminders for appointments
+
+- Add audio-based health tips
+
+## 💖 About
+- Built by Nathan Attoh
+- 📍 Ghana
