@@ -1,25 +1,102 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row">
-  <div class="col-md-8 mx-auto">
-    <h2 class="mb-4 text-center">Health Tips ({{ lang|upper }})</h2>
-    
-    <p class="text-center">
-      Switch language:
-      <a href="{{ url_for('index', lang='en') }}" class="btn btn-sm btn-outline-primary">English</a>
-      <a href="{{ url_for('index', lang='tw') }}" class="btn btn-sm btn-outline-success">Twi</a>
-    </p>
 
-    <div class="list-group shadow-sm">
+<!-- 🔐 Auth Buttons -->
+<div class="text-end mt-3 me-4">
+  {% if not current_user.is_authenticated %}
+    <a href="{{ url_for('login') }}" class="btn btn-outline-success me-2">{{ t['login'] }}</a>
+    <a href="{{ url_for('register') }}" class="btn btn-success">{{ t['signup'] }}</a>
+  {% else %}
+    <span class="me-2 text-muted">👋 Hi, {{ current_user.username }}</span>
+    <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
+  {% endif %}
+</div>
+
+<!-- 🌸 Hero Section -->
+<section class="hero py-5 text-center text-white position-relative overflow-hidden">
+  <div class="overlay"></div>
+  <div class="container position-relative py-5">
+    <h1 class="fw-bold display-5">{{ t['welcome'] }}</h1>
+    <p class="lead mt-3 mb-4">{{ t['subtitle'] }}</p>
+    <a href="{{ url_for('appointments') }}" class="btn btn-light btn-lg shadow-sm fw-semibold px-4">
+      {{ t['book'] }}
+    </a>
+  </div>
+</section>
+
+<!-- 🌍 Language Toggle -->
+<div class="text-center mt-4 mb-4">
+  <div class="btn-group shadow-sm" role="group">
+    <a href="{{ url_for('index', lang='en') }}"
+       class="btn {% if current_lang == 'en' %}btn-success text-white{% else %}btn-outline-success{% endif %}">
+      🇬🇧 English
+    </a>
+    <a href="{{ url_for('index', lang='tw') }}"
+       class="btn {% if current_lang == 'tw' %}btn-success text-white{% else %}btn-outline-success{% endif %}">
+      🇬🇭 Twi
+    </a>
+  </div>
+</div>
+
+<!-- 💡 Features Section -->
+<section class="py-5">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-4" style="color:#00796b;">What You Can Do</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card h-100 p-4 shadow-sm">
+          <div class="mb-3 fs-1">📚</div>
+          <h5 class="fw-bold">Learn Health Tips</h5>
+          <p class="text-muted">Read or listen to maternal health advice in your language.</p>
+          <a href="#tips" class="btn btn-outline-success btn-sm">View Tips</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="feature-card h-100 p-4 shadow-sm">
+          <div class="mb-3 fs-1">🩺</div>
+          <h5 class="fw-bold">Book Appointments</h5>
+          <p class="text-muted">Schedule clinic visits with nearby health workers.</p>
+          <a href="{{ url_for('appointments') }}" class="btn btn-outline-success btn-sm">{{ t['book'] }}</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="feature-card h-100 p-4 shadow-sm">
+          <div class="mb-3 fs-1">💬</div>
+          <h5 class="fw-bold">Ask a Nurse</h5>
+          <p class="text-muted">Get trusted answers to your health questions.</p>
+          <a href="{{ url_for('login') }}" class="btn btn-outline-success btn-sm">Ask Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 🩺 Health Tips Section -->
+<section id="tips" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4 fw-bold" style="color:#00796b;">
+      {{ t['title'] }} ({{ current_lang|upper }})
+    </h2>
+    <div class="row g-4">
       {% for tip in tips %}
-        <a href="{{ url_for('tip_detail', tip_id=tip.id) }}" class="list-group-item list-group-item-action">
-          <strong>{{ tip.title }}</strong><br>
-          <small class="text-muted">{{ tip.created_at.strftime('%Y-%m-%d') }}</small>
-        </a>
+      <div class="col-md-6 col-lg-4">
+        <div class="card tip-card h-100 border-0 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title fw-bold" style="color:#00796b;">{{ tip.title }}</h5>
+            <p class="card-text text-muted">{{ tip.content[:120] }}...</p>
+            <a href="{{ url_for('tip_detail', tip_id=tip.id) }}" class="btn btn-outline-success btn-sm">
+              {{ t['read_more'] }}
+            </a>
+          </div>
+        </div>
+      </div>
       {% else %}
-        <div class="alert alert-warning">No tips available for this language.</div>
+      <p class="text-center text-muted">No health tips available for this language.</p>
       {% endfor %}
     </div>
   </div>
-</div>
+</section>
+
 {% endblock %}

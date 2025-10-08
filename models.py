@@ -9,7 +9,10 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)  # store hashed in prod
-    role = db.Column(db.String(20), default='nurse')  # 'nurse' or 'mother'
+    role = db.Column(db.String(20), default='mother')  # 'nurse' or 'mother'
+
+    def __repr__(self):
+        return f"<User {self.username} ({self.role})>"
 
 class Tip(db.Model):
     __tablename__ = 'tips'
@@ -20,6 +23,9 @@ class Tip(db.Model):
     audio_filename = db.Column(db.String(200), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    def __repr__(self):
+        return f"<Tip {self.title} ({self.language})>"
+
 class Appointment(db.Model):
     __tablename__ = 'appointments'
     id = db.Column(db.Integer, primary_key=True)
@@ -29,3 +35,6 @@ class Appointment(db.Model):
     date = db.Column(db.String(50), nullable=False)  # keep simple
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     notes = db.Column(db.Text, nullable=True)
+
+    def __repr__(self):
+        return f"<Appointment {self.mother_name} - {self.date}>"

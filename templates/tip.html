@@ -1,13 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>{{ tip.title }}</h2>
-<div>{{ tip.content|nl2br }}</div>
 
-{% if tip.audio_filename %}
-  <h3>Audio</h3>
-  <audio controls preload="none">
-    <source src="{{ url_for('audio_file', filename=tip.audio_filename) }}" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-{% endif %}
+<div class="container py-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h3 class="card-title fw-bold" style="color:#008080;">{{ tip.title }}</h3>
+      <p class="card-text mt-3">{{ tip.content }}</p>
+
+      {% if tip.audio_filename %}
+      <div class="mt-4">
+        <audio controls>
+          <source src="{{ url_for('audio_file', filename=tip.audio_filename) }}" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <a href="{{ url_for('index', lang=current_lang) }}" class="btn btn-outline-success">
+      ← {{ t['title'] }}
+    </a>
+  </div>
+</div>
+
 {% endblock %}
