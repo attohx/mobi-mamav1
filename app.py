@@ -312,7 +312,7 @@ def create_app():
         return render_template("appointments.html", form=form, edit=True)
 
 
-        return app
+    return app
 
 
 if __name__ == "__main__":
