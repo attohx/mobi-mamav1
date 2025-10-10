@@ -1,18 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container py-5" style="max-width:480px;">
-  <div class="card shadow-sm border-0 p-4">
-    <h3 class="text-center mb-4 fw-bold" style="color:#008080;">Create Account</h3>
+
+<div class="register-container d-flex align-items-center justify-content-center">
+  <div class="register-card shadow-sm p-4 rounded-4">
+    <h2 class="text-center fw-bold mb-3" style="color:var(--teal);">Create Your Account</h2>
+    <p class="text-center text-muted mb-4">Join Mobi Mama and get access to healthcare support</p>
+
     <form method="POST">
       {{ form.hidden_tag() }}
-      <div class="mb-3">{{ form.username.label }} {{ form.username(class="form-control") }}</div>
-      <div class="mb-3">{{ form.password.label }} {{ form.password(class="form-control") }}</div>
-      <div class="mb-3">{{ form.confirm.label }} {{ form.confirm(class="form-control") }}</div>
-      <div class="d-grid">{{ form.submit(class="btn btn-success btn-lg") }}</div>
+
+      <div class="mb-3">
+        {{ form.username.label(class="form-label fw-semibold") }}
+        {{ form.username(class="form-control form-control-lg") }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.password.label(class="form-label fw-semibold") }}
+        {{ form.password(class="form-control form-control-lg") }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.confirm_password.label(class="form-label fw-semibold") }}
+        {{ form.confirm_password(class="form-control form-control-lg") }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.role.label(class="form-label fw-semibold") }}
+        {{ form.role(class="form-select form-select-lg") }}
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-coral btn-lg mt-2">Sign Up</button>
+      </div>
+
+      <p class="text-center text-muted mt-3 mb-0">
+        Already have an account?
+        <a href="{{ url_for('login') }}" style="color:var(--teal); font-weight:600;">Login</a>
+      </p>
     </form>
-    <p class="text-center mt-3">
-      Already have an account? <a href="{{ url_for('login') }}">Login here</a>
-    </p>
   </div>
 </div>
+
 {% endblock %}

@@ -1,21 +1,95 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Nurse Dashboard</h2>
-<p><a href="{{ url_for('add_tip') }}">Add Tip</a></p>
 
-<h3>Tips</h3>
-<ul>
-  {% for tip in tips %}
-    <li>{{ tip.title }} ({{ tip.language }})</li>
-  {% endfor %}
-</ul>
+<div class="container py-5">
+  <h2 class="fw-bold mb-4 text-center" style="color:var(--teal);">
+    👩🏽‍⚕️ Nurse Dashboard
+  </h2>
 
-<h3>Appointments</h3>
-<ul>
-  {% for a in appts %}
-    <li>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }} — {{ a.mother_name }} — {{ a.clinic }} — {{ a.date }} — {{ a.phone }}</li>
-  {% else %}
-    <li>No appointments yet.</li>
-  {% endfor %}
-</ul>
+  <div class="row g-4">
+    <!-- Health Tips Section -->
+    <div class="col-lg-6">
+      <div class="dashboard-card shadow-sm p-4 rounded-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="fw-semibold" style="color:var(--teal);">Health Tips</h4>
+          <a href="{{ url_for('add_tip') }}" class="btn btn-coral btn-sm">+ Add Tip</a>
+        </div>
+
+        {% if tips %}
+        <div class="table-responsive">
+          <table class="table align-middle table-hover">
+            <thead style="background-color:var(--aqua-light);">
+              <tr>
+                <th>Title</th>
+                <th>Language</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for tip in tips.items %}
+              <tr>
+                <td>{{ tip.title }}</td>
+                <td>{{ tip.language|upper }}</td>
+                <td>{{ tip.created_at.strftime('%Y-%m-%d') }}</td>
+                <td>
+                  <a href="{{ url_for('edit_tip', tip_id=tip.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                  <a href="{{ url_for('delete_tip', tip_id=tip.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+          <p class="text-muted">No tips available yet.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Appointments Section -->
+    <div class="col-lg-6">
+      <div class="dashboard-card shadow-sm p-4 rounded-4">
+        <h4 class="fw-semibold mb-3" style="color:var(--teal);">Appointments</h4>
+
+        {% if appts %}
+        <div class="table-responsive">
+          <table class="table align-middle table-hover">
+            <thead style="background-color:var(--aqua-light);">
+              <tr>
+                <th>Mother</th>
+                <th>Phone</th>
+                <th>Clinic</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for appt in appts.items %}
+              <tr>
+                <td>{{ appt.mother_name }}</td>
+                <td>{{ appt.phone }}</td>
+                <td>{{ appt.clinic }}</td>
+                <td>{{ appt.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ appt.status|capitalize }}</td>
+                <td>
+                  <a href="{{ url_for('edit_appointment', appt_id=appt.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                  {% if appt.status == 'pending' %}
+                  <a href="{{ url_for('cancel_appointment', appt_id=appt.id) }}" class="btn btn-sm btn-warning">Cancel</a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+          <p class="text-muted">No appointments yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

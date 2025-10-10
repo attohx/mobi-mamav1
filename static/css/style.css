@@ -1,118 +1,234 @@
-/* 🌸 Global Styles */
+:root {
+  --teal: #00a6a6;
+  --coral: #ff7043;
+  --gray-dark: #333333;
+  --gray-text: #555555;
+  --white: #ffffff;
+  --aqua-light: #e0f7f5;
+}
+
+/* 🌐 Global */
 body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #fffaf9;
-  color: #333;
+  font-family: "Poppins", "Inter", sans-serif;
+  background-color: var(--white);
+  color: var(--gray-dark);
+  margin: 0;
+  padding: 0;
 }
 
-a {
-  text-decoration: none;
-}
-
-/* 🌷 Navbar */
+/* 🩺 Navbar */
 .navbar {
-  background: linear-gradient(135deg, #ffb6b3, #ff9994);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  background-color: var(--teal);
+  padding: 0.8rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-
 .navbar-brand {
+  color: var(--white) !important;
   font-weight: 700;
-  font-size: 1.4rem;
-  color: white !important;
+  font-size: 1.5rem;
 }
-
 .nav-link {
-  color: #fff !important;
+  color: var(--white) !important;
+  margin: 0 6px;
   font-weight: 500;
-  margin-right: 10px;
-  transition: all 0.2s ease;
+  transition: 0.3s;
 }
-
 .nav-link:hover {
-  color: #ffeaea !important;
-  transform: scale(1.05);
+  color: var(--coral) !important;
 }
 
-/* 💖 Buttons */
-.btn-primary {
-  background-color: #ff7a7a;
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: #ff6262;
-}
-
-/* 🌺 Main Layout */
-main {
-  padding-top: 30px;
-  padding-bottom: 50px;
-}
-
-/* 🌼 Alerts */
-.alert {
-  border-radius: 12px;
-}
-
-/* 🌻 Footer */
-footer {
-  background-color: #fff3f1;
-  color: #555;
-  padding: 25px 0;
-  font-size: 0.95rem;
-  text-align: center;
-  border-top: 2px solid #ffb6b3;
-}
-
-footer a {
-  color: #ff7a7a;
-  font-weight: 500;
-}
-
-/* 🌸 Hero Section */
+/* 🧡 Hero Section */
 .hero {
-  background: linear-gradient(135deg, #ffb6b3, #ffcccc);
-  position: relative;
-  border-radius: 0 0 2rem 2rem;
+  background: linear-gradient(135deg, var(--aqua-light), var(--white));
+  text-align: center;
+  padding: 5rem 0;
+  border-bottom: 4px solid var(--teal);
+}
+.hero h1 {
+  font-weight: 700;
+  font-size: 2.8rem;
+  color: var(--teal);
+}
+.hero p {
+  color: var(--gray-text);
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 10px auto;
+}
+.hero .btn {
+  background-color: var(--coral);
+  color: var(--white);
+  font-weight: 600;
+  border-radius: 25px;
+  padding: 12px 26px;
+  border: none;
+  transition: 0.3s;
+}
+.hero .btn:hover {
+  background-color: #ff5722;
+  transform: scale(1.04);
 }
 
-.hero .overlay {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(255, 99, 71, 0.2);
-  z-index: 1;
-}
-
-.hero .container {
-  position: relative;
-  z-index: 2;
-}
-
-/* 🌿 Feature Cards */
+/* 💬 Feature Cards */
 .feature-card {
-  border-radius: 16px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  background-color: #fff;
+  background-color: var(--aqua-light);
+  border: none;
+  border-radius: 14px;
+  padding: 30px;
+  transition: all 0.3s ease;
 }
-
 .feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+.feature-card h5 {
+  color: var(--teal);
+  font-weight: 600;
+}
+.feature-card .btn {
+  color: var(--teal);
+  border: 1px solid var(--teal);
+}
+.feature-card .btn:hover {
+  background-color: var(--teal);
+  color: var(--white);
 }
 
-/* 🌾 Tip Cards */
+/* 📚 Tips Section */
+#tips {
+  background-color: var(--aqua-light);
+  padding: 5rem 0;
+}
 .tip-card {
+  background-color: var(--white);
   border-radius: 12px;
-  transition: all 0.2s ease;
-  background-color: #fff;
+  border: none;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
 }
-
 .tip-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.tip-card .card-title {
+  color: var(--teal);
+  font-weight: 600;
 }
 
-/* 🌼 Language Switch */
-.btn-group a {
-  font-weight: 500;
+/* ⚙️ Footer */
+footer {
+  background-color: var(--gray-dark);
+  color: var(--white);
+  text-align: center;
+  padding: 20px 0;
+  border-top: 3px solid var(--teal);
+}
+footer a {
+  color: var(--coral);
+  font-weight: 600;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2.1rem; }
+}
+
+/* 🎨 Custom Button Styles */
+.btn-teal {
+  background-color: var(--teal);
+  color: var(--white);
+  border: none;
+}
+.btn-teal:hover {
+  background-color: #009090;
+  color: var(--white);
+}
+
+.btn-outline-teal {
+  border: 1px solid var(--teal);
+  color: var(--teal);
+}
+.btn-outline-teal:hover {
+  background-color: var(--teal);
+  color: var(--white);
+}
+
+.btn-coral {
+  background-color: var(--coral);
+  color: var(--white);
+  border: none;
+}
+.btn-coral:hover {
+  background-color: #ff5722;
+  color: var(--white);
+}
+/* 🩵 Login Page */
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--aqua-light), var(--white));
+  padding: 40px 15px;
+}
+
+.login-card {
+  background-color: var(--white);
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid #e5e5e5;
+  border-top: 4px solid var(--teal);
+  transition: all 0.3s ease;
+}
+
+.login-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.form-label {
+  color: var(--gray-dark);
+}
+
+.form-control {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 12px 16px;
+  font-size: 1rem;
+}
+
+.form-control:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 0.2rem rgba(0,166,166,0.15);
+}
+/* 🩵 Register Page */
+.register-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--white), var(--aqua-light));
+  padding: 40px 15px;
+}
+
+.register-card {
+  background-color: var(--white);
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid #e5e5e5;
+  border-top: 4px solid var(--teal);
+  transition: all 0.3s ease;
+}
+
+.register-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.form-select {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 12px 16px;
+  font-size: 1rem;
+}
+
+.form-select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 0.2rem rgba(0,166,166,0.15);
 }
