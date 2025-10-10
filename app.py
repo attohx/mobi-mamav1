@@ -254,65 +254,65 @@ def create_app():
         return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
     
     # ------------------- EDIT TIP -------------------
-@app.route("/nurse/edit_tip/<int:tip_id>", methods=["GET", "POST"])
-@login_required
-def edit_tip(tip_id):
-    if current_user.role != "nurse":
-        flash("Access denied.", "danger")
-        return redirect(url_for("index"))
+    @app.route("/nurse/edit_tip/<int:tip_id>", methods=["GET", "POST"])
+    @login_required
+    def edit_tip(tip_id):
+        if current_user.role != "nurse":
+            flash("Access denied.", "danger")
+            return redirect(url_for("index"))
 
-    tip = Tip.query.get_or_404(tip_id)
-    form = TipForm(obj=tip)
-    if form.validate_on_submit():
-        tip.title = form.title.data
-        tip.content = form.content.data
-        tip.language = form.language.data
-        tip.audio_filename = form.audio_filename.data or None
+        tip = Tip.query.get_or_404(tip_id)
+        form = TipForm(obj=tip)
+        if form.validate_on_submit():
+            tip.title = form.title.data
+            tip.content = form.content.data
+            tip.language = form.language.data
+            tip.audio_filename = form.audio_filename.data or None
+            db.session.commit()
+            flash("Tip updated successfully!", "success")
+            return redirect(url_for("nurse_dashboard"))
+        return render_template("add_tip.html", form=form, edit=True)
+
+
+    # ------------------- DELETE TIP -------------------
+    @app.route("/nurse/delete_tip/<int:tip_id>")
+    @login_required
+    def delete_tip(tip_id):
+        if current_user.role != "nurse":
+            flash("Access denied.", "danger")
+            return redirect(url_for("index"))
+
+        tip = Tip.query.get_or_404(tip_id)
+        db.session.delete(tip)
         db.session.commit()
-        flash("Tip updated successfully!", "success")
+        flash("Tip deleted successfully.", "success")
         return redirect(url_for("nurse_dashboard"))
-    return render_template("add_tip.html", form=form, edit=True)
 
 
-# ------------------- DELETE TIP -------------------
-@app.route("/nurse/delete_tip/<int:tip_id>")
-@login_required
-def delete_tip(tip_id):
-    if current_user.role != "nurse":
-        flash("Access denied.", "danger")
-        return redirect(url_for("index"))
+    # ------------------- EDIT APPOINTMENT -------------------
+    @app.route("/nurse/edit_appointment/<int:appt_id>", methods=["GET", "POST"])
+    @login_required
+    def edit_appointment(appt_id):
+        if current_user.role != "nurse":
+            flash("Access denied.", "danger")
+            return redirect(url_for("index"))
 
-    tip = Tip.query.get_or_404(tip_id)
-    db.session.delete(tip)
-    db.session.commit()
-    flash("Tip deleted successfully.", "success")
-    return redirect(url_for("nurse_dashboard"))
-
-
-# ------------------- EDIT APPOINTMENT -------------------
-@app.route("/nurse/edit_appointment/<int:appt_id>", methods=["GET", "POST"])
-@login_required
-def edit_appointment(appt_id):
-    if current_user.role != "nurse":
-        flash("Access denied.", "danger")
-        return redirect(url_for("index"))
-
-    appt = Appointment.query.get_or_404(appt_id)
-    form = AppointmentForm(obj=appt)
-    if form.validate_on_submit():
-        appt.mother_name = form.mother_name.data
-        appt.phone = form.phone.data
-        appt.clinic = form.clinic.data
-        appt.date = form.date.data
-        appt.notes = form.notes.data
-        appt.status = form.status.data
-        db.session.commit()
-        flash("Appointment updated successfully!", "success")
-        return redirect(url_for("nurse_dashboard"))
-    return render_template("appointments.html", form=form, edit=True)
+        appt = Appointment.query.get_or_404(appt_id)
+        form = AppointmentForm(obj=appt)
+        if form.validate_on_submit():
+            appt.mother_name = form.mother_name.data
+            appt.phone = form.phone.data
+            appt.clinic = form.clinic.data
+            appt.date = form.date.data
+            appt.notes = form.notes.data
+            appt.status = form.status.data
+            db.session.commit()
+            flash("Appointment updated successfully!", "success")
+            return redirect(url_for("nurse_dashboard"))
+        return render_template("appointments.html", form=form, edit=True)
 
 
-    return app
+        return app
 
 
 if __name__ == "__main__":
