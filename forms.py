@@ -30,7 +30,7 @@ class RegisterForm(FlaskForm):
         DataRequired(),
         EqualTo('password', message='Passwords must match.')
     ])
-    role = SelectField('Role', choices=[('mother', 'Mother'), ('nurse', 'Nurse')], validators=[DataRequired()])
+    role = SelectField('Role', choices=[('mother', 'Mother'), ('clinic', 'Clinic')], validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
 

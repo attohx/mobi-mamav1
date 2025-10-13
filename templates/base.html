@@ -20,7 +20,7 @@
   <!-- 🌸 Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
-      <a class="navbar-brand" href="{{ url_for('index') }}">🩷 Mobi Mama</a>
+      <a class="navbar-brand fw-bold" href="{{ url_for('main.index') }}">🩵 Mobi Mama</a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -28,18 +28,40 @@
 
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav align-items-center">
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('appointments') }}">Appointments</a></li>
+          <!-- General Links -->
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('mother.appointments') }}">Appointments</a>
+          </li>
 
+          <!-- Authenticated Users -->
           {% if current_user.is_authenticated %}
-            {% if current_user.role == 'nurse' %}
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('nurse_dashboard') }}">Dashboard</a></li>
+            {% if current_user.role == 'mother' %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('mother.dashboard') }}">My Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('mother.ask_mobi') }}">Ask Mobi 🤖</a>
+              </li>
+            {% elif current_user.role == 'clinic' %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('clinic.dashboard') }}">Dashboard</a>
+              </li>
             {% endif %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
-          {% else %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
             <li class="nav-item">
-              <a class="nav-link btn btn-light text-danger px-3 py-1 rounded-pill ms-2" href="{{ url_for('register') }}">
+              <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+            </li>
+
+          <!-- Guests -->
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-light text-danger px-3 py-1 rounded-pill ms-2"
+                 href="{{ url_for('auth.register') }}">
                 Sign Up
               </a>
             </li>
@@ -66,7 +88,7 @@
   </main>
 
   <!-- 🌷 Footer -->
-  <footer>
+  <footer class="text-center py-4 mt-5 bg-light border-top">
     <p>&copy; {{ now().year if now else "2025" }} <strong>Mobi Mama</strong> — Empowering Mothers, One Tip at a Time 💖</p>
     <p>
       <a href="mailto:info@mobimama.org">Contact Us</a> |

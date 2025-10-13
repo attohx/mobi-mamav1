@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4 fw-bold" style="color:#ff7043;">🩺 Ask Mobi</h2>
+    <p class="text-center text-muted mb-5">Chat with Mobi — your friendly maternal health guide 💬</p>
+
+    <div class="card shadow-sm mx-auto" style="max-width:700px; border-radius:16px;">
+      <div class="card-body">
+        <form method="POST" class="mb-4">
+          <div class="input-group">
+            <input type="text" name="message" class="form-control" placeholder="Ask a health question..." required>
+            <button class="btn btn-primary" style="background:#ff7043; border:none;">Send</button>
+          </div>
+        </form>
+
+        {% if user_message %}
+        <div class="chat-box">
+          <div class="user-msg p-3 mb-2 rounded-3" style="background:#f0f0f0; text-align:right;">
+            <strong>You:</strong> {{ user_message }}
+          </div>
+          <div class="mobi-msg p-3 rounded-3" style="background:#fff3e0;">
+            <strong>Mobi 🤱:</strong> {{ response }}
+          </div>
+        </div>
+        {% else %}
+        <p class="text-center text-muted">Start by asking a question above 👆</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
