@@ -6,6 +6,7 @@ from routes import main_bp, auth_bp, clinic_bp, mother_bp, admin_bp, admin_auth_
 from flask_migrate import Migrate
 import os
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -14,7 +15,12 @@ def create_app():
     db.init_app(app)
 
     # Initialize Flask-Migrate
-    migrate = Migrate(app, db)  # <--- this line is required
+    migrate = Migrate(app, db)
+
+    # ✅ Auto-create tables if not existing (first run convenience)
+    with app.app_context():
+        db.create_all()
+        print("✅ Database tables checked and ready!")
 
     # Initialize Login Manager
     login_manager = LoginManager()
@@ -35,9 +41,8 @@ def create_app():
     app.register_blueprint(admin_bp)
     app.register_blueprint(admin_auth_bp, url_prefix="/mobi-panel-888x")
 
-    
-
     return app
+
 
 if __name__ == "__main__":
     app = create_app()
