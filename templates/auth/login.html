@@ -1,34 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-
-<div class="login-container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
-  <div class="login-card shadow-sm p-4 rounded-4" style="max-width: 420px; width: 100%; background: #fff;">
-    <h2 class="text-center fw-bold mb-3" style="color: var(--teal);">Welcome Back</h2>
-    <p class="text-center text-muted mb-4">Login to access your Mobi Mama account</p>
-
+<div class="login-container">
+    <h2>Login</h2>
     <form method="POST">
-      {{ form.hidden_tag() }}
-
-      <div class="mb-3">
-        {{ form.username.label(class="form-label fw-semibold") }}
-        {{ form.username(class="form-control form-control-lg") }}
-      </div>
-
-      <div class="mb-3">
-        {{ form.password.label(class="form-label fw-semibold") }}
-        {{ form.password(class="form-control form-control-lg") }}
-      </div>
-
-      <div class="d-grid mt-4">
-        <button type="submit" class="btn btn-coral btn-lg">Login</button>
-      </div>
-
-      <p class="text-center text-muted mt-4 mb-0">
-        Don’t have an account?
-        <a href="{{ url_for('auth.register') }}" style="color: var(--teal); font-weight:600;">Sign Up</a>
-      </p>
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+        </div>
+        <div>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+        </div>
+        <div>
+            {{ form.submit() }}
+        </div>
     </form>
-  </div>
 </div>
-
 {% endblock %}
