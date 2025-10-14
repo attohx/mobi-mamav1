@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h2>Edit Appointment</h2>
+<form method="POST" class="mt-3">
+  <div class="mb-3">
+    <label for="mother_name" class="form-label">Mother Name</label>
+    <input type="text" class="form-control" id="mother_name" name="mother_name" value="{{ appointment.mother_name }}" required>
+  </div>
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone</label>
+    <input type="text" class="form-control" id="phone" name="phone" value="{{ appointment.phone }}" required>
+  </div>
+  <div class="mb-3">
+    <label for="clinic" class="form-label">Clinic</label>
+    <select class="form-select" id="clinic" name="clinic" required>
+      {% for clinic in clinics %}
+        <option value="{{ clinic.id }}" {% if appointment.clinic_id == clinic.id %}selected{% endif %}>{{ clinic.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="date" class="form-label">Date</label>
+    <input type="date" class="form-control" id="date" name="date" value="{{ appointment.date }}" required>
+  </div>
+  <div class="mb-3">
+    <label for="notes" class="form-label">Notes</label>
+    <textarea class="form-control" id="notes" name="notes">{{ appointment.notes }}</textarea>
+  </div>
+  <button type="submit" class="btn btn-success">Save Changes</button>
+  <a href="{{ url_for('admin.manage_appointments') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

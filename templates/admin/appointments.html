@@ -1,0 +1,86 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h2>Appointments</h2>
+
+<!-- Filter & Search -->
+<form class="row g-3 mb-3" method="GET">
+  <div class="col-md-3">
+    <select class="form-select" name="clinic">
+      <option value="">All Clinics</option>
+      {% for clinic in clinics %}
+        <option value="{{ clinic.id }}" {% if selected_clinic == clinic.id %}selected{% endif %}>
+          {{ clinic.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <input type="date" class="form-control" name="date" value="{{ selected_date }}">
+  </div>
+  <div class="col-md-4">
+    <input type="text" class="form-control" name="search" placeholder="Search by mother or phone" value="{{ search_query }}">
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100">Filter</button>
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Mother</th>
+      <th>Phone</th>
+      <th>Clinic</th>
+      <th>Date</th>
+      <th>Notes</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for appointment in appointments.items %}
+    <tr>
+      <td>{{ appointment.id }}</td>
+      <td>{{ appointment.mother_name }}</td>
+      <td>{{ appointment.phone }}</td>
+      <td>{{ appointment.clinic.name }}</td>
+      <td>{{ appointment.date }}</td>
+      <td>{{ appointment.notes }}</td>
+      <td>
+        <a href="{{ url_for('admin.edit_appointment', appointment_id=appointment.id) }}" class="btn btn-sm btn-warning">Edit</a>
+        <form action="{{ url_for('admin.delete_appointment', appointment_id=appointment.id) }}" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this appointment?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Pagination -->
+<nav>
+  <ul class="pagination">
+    {% if appointments.has_prev %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('admin.manage_appointments', page=appointments.prev_num, clinic=selected_clinic, date=selected_date, search=search_query) }}">Previous</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    {% endif %}
+
+    {% for p in appointments.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+      {% if p %}
+        <li class="page-item {% if p == appointments.page %}active{% endif %}">
+          <a class="page-link" href="{{ url_for('admin.manage_appointments', page=p, clinic=selected_clinic, date=selected_date, search=search_query) }}">{{ p }}</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">…</span></li>
+      {% endif %}
+    {% endfor %}
+
+    {% if appointments.has_next %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('admin.manage_appointments', page=appointments.next_num, clinic=selected_clinic, date=selected_date, search=search_query) }}">Next</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}

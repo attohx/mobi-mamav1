@@ -1,0 +1,67 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h2>Clinics</h2>
+
+<form class="mb-3 row g-3" method="GET">
+  <div class="col-md-10">
+    <input type="text" class="form-control" name="search" placeholder="Search by clinic name" value="{{ search_query }}">
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100">Search</button>
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for clinic in clinics.items %}
+    <tr>
+      <td>{{ clinic.id }}</td>
+      <td>{{ clinic.name }}</td>
+      <td>{{ clinic.address }}</td>
+      <td>{{ clinic.phone }}</td>
+      <td>
+        <form action="{{ url_for('admin.delete_clinic', clinic_id=clinic.id) }}" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this clinic?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Pagination -->
+<nav>
+  <ul class="pagination">
+    {% if clinics.has_prev %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('admin.manage_clinics', page=clinics.prev_num, search=search_query) }}">Previous</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    {% endif %}
+
+    {% for p in clinics.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+      {% if p %}
+        <li class="page-item {% if p == clinics.page %}active{% endif %}">
+          <a class="page-link" href="{{ url_for('admin.manage_clinics', page=p, search=search_query) }}">{{ p }}</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">…</span></li>
+      {% endif %}
+    {% endfor %}
+
+    {% if clinics.has_next %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('admin.manage_clinics', page=clinics.next_num, search=search_query) }}">Next</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}

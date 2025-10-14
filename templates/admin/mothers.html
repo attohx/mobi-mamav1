@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h2>Mothers</h2>
+
+<form class="mb-3 row g-3" method="GET">
+  <div class="col-md-10">
+    <input type="text" class="form-control" name="search" placeholder="Search by username" value="{{ search_query }}">
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100">Search</button>
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Created At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for mother in mothers.items %}
+    <tr>
+      <td>{{ mother.id }}</td>
+      <td>{{ mother.username }}</td>
+      <td>{{ mother.created_at.strftime('%Y-%m-%d') }}</td>
+      <td>
+        <form action="{{ url_for('admin.delete_mother', user_id=mother.id) }}" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this mother?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Pagination -->
+<nav>
+  <ul class="pagination">
+    {% if mothers.has_prev %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('admin.manage_mothers', page=mothers.prev_num, search=search_query) }}">Previous</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+    {% endif %}
+
+    {% for p in mothers.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+      {% if p %}
+        <li class="page-item {% if p == mothers.page %}active{% endif %}">
+          <a class="page-link" href="{{ url_for('admin.manage_mothers', page=p, search=search_query) }}">{{ p }}</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">…</span></li>
+      {% endif %}
+    {% endfor %}
+
+    {% if mothers.has_next %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('admin.manage_mothers', page=mothers.next_num, search=search_query) }}">Next</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}
