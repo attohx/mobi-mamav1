@@ -2,8 +2,8 @@ from flask import Flask
 from config import Config
 from models import db, User
 from flask_login import LoginManager
-from routes import main_bp, auth_bp, clinic_bp, mother_bp, admin_bp, admin_auth_bp
 from flask_migrate import Migrate
+from routes import main_bp, auth_bp, clinic_bp, mother_bp, admin_bp, admin_auth_bp
 import os
 
 
@@ -11,18 +11,15 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Initialize database
+    # Initialize database and migration
     db.init_app(app)
-
-    # Initialize Flask-Migrate
     migrate = Migrate(app, db)
 
-    # ✅ Auto-create tables if not existing (first run convenience)
+    # Create tables automatically (only if they don't exist)
     with app.app_context():
         db.create_all()
-        print("✅ Database tables checked and ready!")
 
-    # Initialize Login Manager
+    # Initialize Flask-Login
     login_manager = LoginManager()
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
